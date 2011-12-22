@@ -10,7 +10,8 @@ if(TL_MODE == 'BE') {
  * This is the tinyMCE (rich text editor) configuration file. Please visit
  * http://tinymce.moxiecode.com for more information.
  */
-$GLOBALS['TL_JAVASCRIPT']['tinyMCE'] = $this->base.'plugins/tinyMCE/tiny_mce_gzip.js'; ?>
+if ($GLOBALS['TL_CONFIG']['useRTE']): ?>
+	<script src="<?php echo $this->base; ?>plugins/tinyMCE/tiny_mce_gzip.js"></script>
 
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
@@ -50,7 +51,7 @@ TableWizard4ward.tinyMCEInit = function(textareaID) {
 	  cleanup_on_startup : true,
 	  save_enablewhendirty : true,
 	  save_on_tinymce_forms : true,
-	  save_callback : "TinyCallback.cleanXHTML",
+	 // save_callback : "TinyCallback.cleanXHTML",
 	  init_instance_callback : "TinyCallback.getScrollOffset",
 	  advimage_update_dimensions_onchange : false,
 	  external_image_list_url : "<?php echo TL_PATH; ?>/plugins/tinyMCE/plugins/typolinks/typoimages.php",
@@ -86,3 +87,4 @@ TableWizard4ward.tinyMCEInit = function(textareaID) {
 
 //--><!]]>
 </script>
+<?php endif; ?>
