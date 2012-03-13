@@ -31,10 +31,10 @@ class TableWizard4ward extends TableWizard
 {
 
 	public function generate(){
-		// CSV-Import-Icon
-		$return = '<a href="' . $this->addToUrl('key=table') . '" title="' . specialchars($GLOBALS['TL_LANG'][$this->strTable]['importTable'][1]) . '" onclick="Backend.getScrollOffset();">' . $this->generateImage('tablewizard.gif', $GLOBALS['TL_LANG'][$this->strTable]['importTable'][0], 'style="vertical-align:text-bottom;"') . '</a> ';
-		
-		$return .= $GLOBALS['TL_LANG']['tl_content']['dblclickHint'];
+		$return = ' <a href="' . $this->addToUrl('key=table') . '" title="' . specialchars($GLOBALS['TL_LANG']['MSC']['tw_import'][1]) . '" onclick="Backend.getScrollOffset()">' . $this->generateImage('tablewizard.gif', $GLOBALS['TL_LANG']['MSC']['tw_import'][0], 'style="vertical-align:text-bottom"') . '</a>';
+		// Todo: rewrite resizing to TableWizard4ward
+		// $return .= $this->generateImage('demagnify.gif', '', 'title="' . specialchars($GLOBALS['TL_LANG']['MSC']['tw_shrink']) . '" style="vertical-align:text-bottom;cursor:pointer" onclick="Backend.tableWizardResize(0.9)"') . $this->generateImage('magnify.gif', '', 'title="' . specialchars($GLOBALS['TL_LANG']['MSC']['tw_expand']) . '" style="vertical-align:text-bottom; cursor:pointer" onclick="Backend.tableWizardResize(1.1)"');
+		$return .= ' <i>('. $GLOBALS['TL_LANG']['tl_content']['dblclickHint'].')</i><br><br>';
 		
 		// the javascript
 		$GLOBALS['TL_JAVASCRIPT']['TableWizard4ward'] = 'system/modules/table4ward/html/TableWizard4ward.js';
@@ -117,7 +117,6 @@ class TableWizard4ward extends TableWizard
 			$this->varValue = array(array(''));
 		}
 
-		
 		// Begin table
 		$return .= '<div id="tl_tablewizard">
   <table cellspacing="0" cellpadding="0" class="tl_tablewizard" id="ctrl_'.$this->strId.'" summary="Table wizard">
