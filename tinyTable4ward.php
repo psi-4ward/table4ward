@@ -5,16 +5,13 @@ if(TL_MODE == 'BE') {
 	$this->language	 = $this->User->language;
 }
 
-
 /**
  * This is the tinyMCE (rich text editor) configuration file. Please visit
  * http://tinymce.moxiecode.com for more information.
  */
 if ($GLOBALS['TL_CONFIG']['useRTE']): ?>
-	<script src="<?php echo $this->base; ?>plugins/tinyMCE/tiny_mce_gzip.js"></script>
-
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
+<script src="<?php echo $this->base; ?>plugins/tinyMCE/tiny_mce_gzip.js"></script>
+<script>
 tinyMCE_GZ.init({
   plugins : "advimage,autosave,directionality,emotions,inlinepopups,paste,save,searchreplace,spellchecker,style,tabfocus,table,template,typolinks,xhtmlxtras",
   themes : "advanced",
@@ -22,15 +19,13 @@ tinyMCE_GZ.init({
   disk_cache : false,
   debug : false
 });
-//--><!]]>
-
 </script>
+
 <script type="text/javascript">
-<!--//--><![CDATA[//><!--
 TableWizard4ward.tinyMCEInit = function(textareaID) {
 
 	tinyMCE.init({
-	  mode : "exact",
+	  mode : "none",
 	  height : "400",
 	  width : "600",
 	  language : "<?php echo $this->language; ?>",
@@ -45,7 +40,8 @@ TableWizard4ward.tinyMCEInit = function(textareaID) {
 	  fix_list_elements : true,
 	  fix_table_elements : true,
 	  theme_advanced_font_sizes : "9px,10px,11px,12px,13px,14px,15px,16px,17px,18px,19px,20px,21px,22px,23px,24px",
-	  doctype : '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
+	  doctype : '<!DOCTYPE html>',
+	  element_format : 'html',
 	  document_base_url : "<?php echo $this->base; ?>",
 	  entities : "160,nbsp,60,lt,62,gt,173,shy",
 	  cleanup_on_startup : true,
@@ -83,8 +79,9 @@ TableWizard4ward.tinyMCEInit = function(textareaID) {
 	  } 
 	  
 	});
+
+	tinyMCE.execCommand('mceAddControl', false, textareaID);
 };
 
-//--><!]]>
 </script>
 <?php endif; ?>

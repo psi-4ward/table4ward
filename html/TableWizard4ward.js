@@ -68,8 +68,8 @@ var TableWizard4ward = new Class({
     	}
     	
     	// init tinyMCE
-    	TableWizard4ward.tinyMCEInit('table4wardRTE');
-    	
+    	 TableWizard4ward.tinyMCEInit('table4wardRTE');
+
     	
     	// attach click-event-handler to table
     	this.table.addEvent('click', this.tableClickHandler.bind(this));
