@@ -17,11 +17,11 @@ var TableWizard4ward = new Class({
     	this.table.getElements("td.tcontainer").each(function(tcontainer){
     		var textarea = tcontainer.getElement('textarea');
     		textarea.setStyle('display','none');
-    		var divEl = new Element('div',{
+    		new Element('div',{
     			'html': this.nl2br(textarea.get('value')),
     			'class': 'tdivcontainer',
     			'styles': {
-    				'height': ((Browser.Engine.presto) ? '65px' : textarea.getStyle('height')),
+    				'height': ((Browser.opera) ? '65px' : textarea.getStyle('height')),
     				'width': textarea.getStyle('width'),
     				'border': '1px solid #CCCCCC',
     				'overflow': 'auto',
@@ -54,7 +54,8 @@ var TableWizard4ward = new Class({
     	}
 
     	// add hidden field with the RTE (only if theres not already one)
-    	if($('mb_tableWizard4ward') == null) {
+		var mb_tableWizard4ward = $('mb_tableWizard4ward');
+    	if(mb_tableWizard4ward == null) {
 	    	this.mbDiv = new Element('div',{
 	    		'id': 'mb_tableWizard4ward',
 	    		'styles': {
@@ -64,7 +65,7 @@ var TableWizard4ward = new Class({
 	    	}).inject(document.body,'bottom');
 	    	this.mbTextarea = new Element('textarea',{'id':'table4wardRTE'}).inject(this.mbDiv);
     	} else {
-    		this.mbDiv = $('mb_tableWizard4ward');
+    		this.mbDiv = mb_tableWizard4ward;
     	}
     	
     	// init tinyMCE
@@ -168,9 +169,9 @@ var TableWizard4ward = new Class({
 
 /**
  * Table wizard
- * @param object
- * @param string
- * @param string
+ * @param el
+ * @param command
+ * @param id
  */
 TableWizard4ward.tableWizard = function(el, command, id)
 	{
@@ -202,14 +203,14 @@ TableWizard4ward.tableWizard = function(el, command, id)
 
 			for (var i=0; i<childs.length; i++)
 			{
-				var next = childs[i].clone(true).injectInside(tr);
+				var next = childs[i].clone(true).inject(tr);
 				if(next.hasClass('tcontainer')){
 					next.getElement('textarea').set('value','');
 					next.getElement('div.tdivcontainer').empty();
 				}
 			}
 
-			tr.injectAfter(parentTr);
+			tr.inject(parentTr, 'after');
 			break;
 			
 		case 'rcopy':
@@ -218,19 +219,19 @@ TableWizard4ward.tableWizard = function(el, command, id)
 			
 			for (var i=0; i<childs.length; i++)
 			{
-				var next = childs[i].clone(true).injectInside(tr);
+				var next = childs[i].clone(true).inject(tr);
 				next.getFirst().value = childs[i].getFirst().value;
 			}
 			
-			tr.injectAfter(parentTr);
+			tr.inject(parentTr,'after');
 			break;
 
 		case 'rup':
-			parentTr.getPrevious().getPrevious() ? parentTr.injectBefore(parentTr.getPrevious()) : parentTr.injectInside(tbody);
+			parentTr.getPrevious().getPrevious() ? parentTr.inject(parentTr.getPrevious(),'before') : parentTr.inject(tbody);
 			break;
 
 		case 'rdown':
-			parentTr.getNext() ? parentTr.injectAfter(parentTr.getNext()) : parentTr.injectBefore(tbody.getFirst().getNext());
+			parentTr.getNext() ? parentTr.inject(parentTr.getNext(), 'after') : parentTr.inject(tbody.getFirst().getNext(), 'before');
 			break;
 
 		case 'rdelete':
@@ -240,7 +241,7 @@ TableWizard4ward.tableWizard = function(el, command, id)
 			for (var i=0; i<rows.length; i++)
 			{
 				var current = rows[i].getChildren()[index];
-				var next = current.clone(true).injectAfter(current);
+				var next = current.clone(true).inject(current, 'after');
 				if(next.hasClass('tcontainer')){
 					next.getElement('textarea').set('value','');
 					next.getElement('div.tdivcontainer').empty();
@@ -251,7 +252,7 @@ TableWizard4ward.tableWizard = function(el, command, id)
 			for (var i=0; i<rows.length; i++)
 			{
 				var current = rows[i].getChildren()[index];
-				var next = current.clone(true).injectAfter(current);
+				var next = current.clone(true).inject(current, 'after');
 				next.getFirst().value = current.getFirst().value;
 			}
 			break;
@@ -262,7 +263,7 @@ TableWizard4ward.tableWizard = function(el, command, id)
 				for (var i=0; i<rows.length; i++)
 				{
 					var current = rows[i].getChildren()[index];
-					current.injectBefore(current.getPrevious());
+					current.inject(current.getPrevious(), 'before');
 				}
 			}
 			else
@@ -270,7 +271,7 @@ TableWizard4ward.tableWizard = function(el, command, id)
 				for (var i=0; i<rows.length; i++)
 				{
 					var current = rows[i].getChildren()[index];
-					current.injectBefore(rows[i].getLast());
+					current.inject(rows[i].getLast(), 'before');
 				}
 			}
 			break;
@@ -281,7 +282,7 @@ TableWizard4ward.tableWizard = function(el, command, id)
 				for (var i=0; i<rows.length; i++)
 				{
 					var current = rows[i].getChildren()[index];
-					current.injectAfter(current.getNext());
+					current.inject(current.getNext(), 'after');
 				}
 			}
 			else
@@ -289,7 +290,7 @@ TableWizard4ward.tableWizard = function(el, command, id)
 				for (var i=0; i<rows.length; i++)
 				{
 					var current = rows[i].getChildren()[index];
-					current.injectBefore(rows[i].getFirst());
+					current.inject(rows[i].getFirst(), 'before');
 				}
 			}
 			break;
@@ -334,12 +335,12 @@ TableWizard4ward.tableWizardResize = function(factor)
 {
 	var size = Cookie.read('BE_CELL_SIZE');
 
-	if (!$defined(size) && !$defined(factor))
+	if (size == undefined && factor == undefined)
 	{
 		return;
 	}
 
-	if ($defined(factor))
+	if (factor != undefined)
 	{
 		var size = '';
 
@@ -356,7 +357,7 @@ TableWizard4ward.tableWizardResize = function(factor)
 
 		Cookie.write('BE_CELL_SIZE', size);
 	}
-	else if ($defined(size))
+	else if (size != undefined)
 	{
 		var chunks = size.split('|');
 
@@ -375,6 +376,6 @@ TableWizard4ward.tableWizardResize = function(factor)
  */
 window.addEvent('domready',function(){
 	$$("table.tl_tablewizard").each(function(elem){
-		var tblwiz4ward = new TableWizard4ward(elem);
+		new TableWizard4ward(elem);
 	});
 });
