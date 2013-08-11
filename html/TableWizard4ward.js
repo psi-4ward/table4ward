@@ -44,7 +44,8 @@ var TableWizard4ward = new Class({
     				'width':document.body.getScrollSize().x,
     				'background':'#000000',
     				'opacity':'0.7',
-    				'display':'none'
+    				'display':'none',
+				    'z-index': 200
     			},
 	    		'events': {
     				// save and close on click outside the tinyMCE 
@@ -60,7 +61,8 @@ var TableWizard4ward = new Class({
 	    		'id': 'mb_tableWizard4ward',
 	    		'styles': {
 	    			'position':'absolute',
-	    			'left':'-3000px'
+	    			'left':'-3000px',
+				    'z-index': 210
 	    		}
 	    	}).inject(document.body,'bottom');
 	    	this.mbTextarea = new Element('textarea',{'id':'table4wardRTE'}).inject(this.mbDiv);
