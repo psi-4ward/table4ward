@@ -36,6 +36,8 @@ class TableWizard4ward extends TableWizard
 		// $return .= $this->generateImage('demagnify.gif', '', 'title="' . specialchars($GLOBALS['TL_LANG']['MSC']['tw_shrink']) . '" style="vertical-align:text-bottom;cursor:pointer" onclick="Backend.tableWizardResize(0.9)"') . $this->generateImage('magnify.gif', '', 'title="' . specialchars($GLOBALS['TL_LANG']['MSC']['tw_expand']) . '" style="vertical-align:text-bottom; cursor:pointer" onclick="Backend.tableWizardResize(1.1)"');
 		$return .= ' <i>('. $GLOBALS['TL_LANG']['tl_content']['dblclickHint'].')</i><br><br>';
 		
+		$this->base = \Environment::get('base');
+		
 		// the javascript
 		$GLOBALS['TL_JAVASCRIPT']['TableWizard4ward'] = 'system/modules/table4ward/html/TableWizard4ward.js';
 		ob_start();
