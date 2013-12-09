@@ -1,7 +1,7 @@
 {
   "name": "psi/table4ward",
-  "description": "RichText Table Columns",
-  "keywords": ["contao"],
+  "description": "Provides a TinyMCE editor for each cell of the table content-element. Just doubleclick a cell to open the rich-text-editor.",
+  "keywords": ["contao", "TinyMCE", "Table"],
   "type": "contao-module",
   "homepage": "https://github.com/psi-4ward/table4ward",
   "license": "LGPL-3.0+",
@@ -25,22 +25,20 @@
     "contao/core": ">=3.1,<3.3"
   },
   "replace": {
-    "contao-legacy/table4ward": "*"
+    "contao-legacy/table4ward": "self.version"
   },
   "conflict": {
-    "contao/core": "3.0.*",
+    "contao/core": "3.0.*"
   },
   "extra": {
     "contao": {
       "sources": {
-        "": "system/modules/table4ward"
-      },
-      "runonce": [
-        "runonce/32update.php"
-      ]
+        "": "system/modules/table4ward",
+        "tinyTable4ward.php": "system/config/tinyTable4ward.php"
+      }
     },
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "1.2.x-dev"
     }
   }
 }
