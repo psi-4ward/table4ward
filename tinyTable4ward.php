@@ -13,7 +13,7 @@ if ($GLOBALS['TL_CONFIG']['useRTE']): ?>
 <script src="<?php echo $this->base; ?>assets/tinymce/tiny_mce_gzip.js"></script>
 <script>
 tinyMCE_GZ.init({
-  plugins : "advimage,autosave,directionality,emotions,inlinepopups,paste,save,searchreplace,spellchecker,style,tabfocus,table,template,typolinks,xhtmlxtras",
+  plugins : "advimage,autosave,directionality,emotions,inlinepopups,paste,save,searchreplace,style,tabfocus,template,typolinks,xhtmlxtras",
   themes : "advanced",
   languages : "<?php echo $this->language; ?>",
   disk_cache : false,
@@ -44,13 +44,11 @@ TableWizard4ward.tinyMCEInit = function(textareaID) {
 	  save_on_tinymce_forms : true,
 	  file_browser_callback : "TinyCallback.fileBrowser",
 	  advimage_update_dimensions_onchange : false,
-	  external_image_list_url : "<?php echo TL_PATH; ?>/plugins/tinyMCE/plugins/typolinks/typoimages.php",
 	  template_external_list_url : "<?php echo TL_PATH; ?>/assets/tinymce/plugins/typolinks/typotemplates.php",
-	  plugins : "advimage,directionality,paste,save,searchreplace,style,tabfocus,template,typolinks,xhtmlxtras",
-	  spellchecker_languages : "<?php echo $this->getSpellcheckerString(); ?>",
+	  plugins : "advimage,directionality,inlinepopups,paste,save,searchreplace,style,tabfocus,template,typolinks,xhtmlxtras",
 	  content_css : "<?php echo TL_PATH; ?>/system/themes/tinymce.css,<?php echo TL_PATH .'/'. $this->uploadPath; ?>/tinymce.css",
 	  event_elements : "a,div,h1,h2,h3,h4,h5,h6,img,p,span",
-	  extended_valid_elements : "q[cite|class|title]",
+	  extended_valid_elements: "q[cite|class|title],article,section,hgroup,figure,figcaption",
 	  tabfocus_elements : ":prev,:next",
 	  theme : "advanced",
 	  theme_advanced_resizing : true,
