@@ -1,0 +1,46 @@
+{
+  "name": "psi/table4ward",
+  "description": "RichText Table Columns",
+  "keywords": ["contao"],
+  "type": "contao-module",
+  "homepage": "https://github.com/psi-4ward/table4ward",
+  "license": "LGPL-3.0+",
+  "authors": [
+    {
+      "name": "Christoph Wiechert",
+      "email": "wio@psitrax.de",
+      "homepage": "http://4wardmedia.de",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "wio@psitrax.de",
+    "issues": "https://github.com/psi-4ward/table4ward/issues",
+    "forum": "https://community.contao.org/de/forumdisplay.php?110-4ward",
+    "irc": "irc://irc.freenode.org/contao.dev",
+    "source": "https://github.com/psi-4ward/table4ward"
+  },
+  "require": {
+    "php": ">=5.3",
+    "contao/core": ">=3.1,<3.3"
+  },
+  "replace": {
+    "contao-legacy/table4ward": "*"
+  },
+  "conflict": {
+    "contao/core": "3.0.*",
+  },
+  "extra": {
+    "contao": {
+      "sources": {
+        "": "system/modules/table4ward"
+      },
+      "runonce": [
+        "runonce/32update.php"
+      ]
+    },
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}
