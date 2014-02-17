@@ -13,15 +13,30 @@ var TableWizard4ward = new Class({
     initialize: function(table){
     	this.table = table;
     	
+    this.table.getParent().getParent().getElements('h3 img').each(function(el) {
+      var src = el.get('src');
+      if(!src) return;
+      var factor;
+      if(src.match(/\/demagnify\.gif$/)) {
+        factor = 0.9;
+      } else if(src.match(/\/magnify\.gif$/)) {
+        factor = 1.1;
+      } else {
+        return;
+      }
+      el.set('onclick', 'TableWizard4ward.tableWizardResize('+factor+')');
+    });
+
     	// set all textareas hidden and display divs with formatting
     	this.table.getElements("td.tcontainer").each(function(tcontainer){
     		var textarea = tcontainer.getElement('textarea');
-    		textarea.setStyle('display','none');
+      var height = ((Browser.opera) ? '65px' : textarea.getSize().y);
+      if(height < 65) height = 65;
     		new Element('div',{
     			'html': this.nl2br(textarea.get('value')),
     			'class': 'tdivcontainer',
     			'styles': {
-    				'height': ((Browser.opera) ? '65px' : textarea.getStyle('height')),
+          'height': height,
     				'width': textarea.getStyle('width'),
     				'border': '1px solid #CCCCCC',
     				'overflow': 'auto',
@@ -29,6 +44,7 @@ var TableWizard4ward = new Class({
     				'margin': '1px 0px'
     			}
     		}).inject(tcontainer);
+      textarea.setStyle('display', 'none');
     	
     		
     	}.bind(this));
@@ -70,6 +86,9 @@ var TableWizard4ward = new Class({
     		this.mbDiv = mb_tableWizard4ward;
     	}
     	
+    // Set cell size
+    TableWizard4ward.tableWizardResize();
+
     	// init tinyMCE
     	 TableWizard4ward.tinyMCEInit('table4wardRTE');
 
@@ -330,49 +349,34 @@ TableWizard4ward.tableWizard = function(el, command, id)
 
 
 /**
-* Resize table wizard fields on focus
-* @param float
-*/
+ * Resize table wizard fields on focus
+ * @param float
+ */
 TableWizard4ward.tableWizardResize = function(factor)
 {
-	var size = Cookie.read('BE_CELL_SIZE');
+  var size = Cookie.read('BE_CELL_SIZE_TABLE4WARD');
+  if(size == null && factor == null) return;
 
-	if (size == undefined && factor == undefined)
-	{
-		return;
-	}
-
-	if (factor != undefined)
-	{
-		var size = '';
-
-		$$('.tl_tablewizard textarea').each(function(el)
-		{
-			el.setStyle('width', (el.getStyle('width').toInt() * factor).round().limit(142, 284));
-			el.setStyle('height', (el.getStyle('height').toInt() * factor).round().limit(66, 132));
-
-			if (size == '')
-			{
-				size = el.getStyle('width') + '|' + el.getStyle('height');
-			}
-		});
-
-		Cookie.write('BE_CELL_SIZE', size);
-	}
-	else if (size != undefined)
-	{
-		var chunks = size.split('|');
-
-		$$('.tl_tablewizard textarea').each(function(el)
-		{
-			el.setStyle('width', chunks[0]);
-			el.setStyle('height', chunks[1]);
-		});
-	}
+  if(factor != null) {
+    size = '';
+    $$('.tl_tablewizard textarea, .tl_tablewizard .tdivcontainer').each(function(el) {
+      el.setStyle('width', (el.getStyle('width').toInt() * factor).round().limit(142, 284));
+      el.setStyle('height', (el.getStyle('height').toInt() * factor).round().limit(66, 132));
+      if(size == '') {
+        size = el.getStyle('width') + '|' + el.getStyle('height');
+      }
+    });
+    Cookie.write('BE_CELL_SIZE_TABLE4WARD', size, { path: Contao.path });
+  } else if(size != null) {
+    var chunks = size.split('|');
+    $$('.tl_tablewizard textarea, .tl_tablewizard .tdivcontainer').each(function(el) {
+      el.setStyle('width', chunks[0]);
+      el.setStyle('height', chunks[1]);
+    });
+  }
 };
+
 	
-
-
 /**
  * Init for each table with class tl_tablewizard
  */
