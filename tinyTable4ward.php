@@ -46,7 +46,7 @@ TableWizard4ward.tinyMCEInit = function(textareaID) {
 	  advimage_update_dimensions_onchange : false,
 	  template_external_list_url : "<?php echo TL_PATH; ?>/assets/tinymce/plugins/typolinks/typotemplates.php",
 	  plugins : "advimage,directionality,inlinepopups,paste,save,searchreplace,style,tabfocus,template,typolinks,xhtmlxtras",
-	  content_css : "<?php echo TL_PATH; ?>/system/themes/tinymce.css,<?php echo TL_PATH .'/'. $this->uploadPath; ?>/tinymce.css",
+	  content_css : "<?php echo TL_PATH; ?>/system/themes/tinymce.css,<?php echo (TL_PATH ? TL_PATH .'/' : ''). $this->uploadPath; ?>/tinymce.css",
 	  event_elements : "a,div,h1,h2,h3,h4,h5,h6,img,p,span",
 	  extended_valid_elements: "q[cite|class|title],article,section,hgroup,figure,figcaption",
 	  tabfocus_elements : ":prev,:next",

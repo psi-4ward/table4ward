@@ -24,7 +24,7 @@ var TableWizard4ward = new Class({
       } else {
         return;
       }
-      el.set('onclick', 'TableWizard4ward.tableWizardResize('+factor+')');
+      el.set('onclick', 'TableWizard4ward.tableWizardResize(' + factor + ')');
     });
 
     // set all textareas hidden and display divs with formatting
@@ -214,8 +214,12 @@ TableWizard4ward.tableWizard = function(el, command, id)
   var parentTr = parentTd.getParent();
   var cols = parentTr.getChildren();
   var index = 0;
+  var i;
+  var tr;
+  var childs;
+  var next;
 
-  for(var i = 0; i < cols.length; i++) {
+  for(i = 0; i < cols.length; i++) {
     if(cols[i] == parentTd) {
       break;
     }
@@ -227,11 +231,11 @@ TableWizard4ward.tableWizard = function(el, command, id)
 
   switch(command) {
     case 'rnew':
-      var tr = new Element('tr');
-      var childs = parentTr.getChildren();
+      tr = new Element('tr');
+      childs = parentTr.getChildren();
 
-      for(var i = 0; i < childs.length; i++) {
-        var next = childs[i].clone(true).inject(tr);
+      for(i = 0; i < childs.length; i++) {
+        next = childs[i].clone(true).inject(tr);
         if(next.hasClass('tcontainer')) {
           next.getElement('textarea').set('value', '');
           next.getElement('div.tdivcontainer').empty();
@@ -242,11 +246,11 @@ TableWizard4ward.tableWizard = function(el, command, id)
       break;
 
     case 'rcopy':
-      var tr = new Element('tr');
-      var childs = parentTr.getChildren();
+      tr = new Element('tr');
+      childs = parentTr.getChildren();
 
-      for(var i = 0; i < childs.length; i++) {
-        var next = childs[i].clone(true).inject(tr);
+      for(i = 0; i < childs.length; i++) {
+        next = childs[i].clone(true).inject(tr);
         next.getFirst().value = childs[i].getFirst().value;
       }
 
@@ -265,7 +269,7 @@ TableWizard4ward.tableWizard = function(el, command, id)
       (rows.length > 2) ? parentTr.destroy() : null;
       break;
     case 'cnew':
-      for(var i = 0; i < rows.length; i++) {
+      for(i = 0; i < rows.length; i++) {
         var current = rows[i].getChildren()[index];
         var next = current.clone(true).inject(current, 'after');
         if(next.hasClass('tcontainer')) {
@@ -275,7 +279,7 @@ TableWizard4ward.tableWizard = function(el, command, id)
       }
       break;
     case 'ccopy':
-      for(var i = 0; i < rows.length; i++) {
+      for(i = 0; i < rows.length; i++) {
         var current = rows[i].getChildren()[index];
         var next = current.clone(true).inject(current, 'after');
         next.getFirst().value = current.getFirst().value;
@@ -284,13 +288,13 @@ TableWizard4ward.tableWizard = function(el, command, id)
 
     case 'cmovel':
       if(index > 0) {
-        for(var i = 0; i < rows.length; i++) {
+        for(i = 0; i < rows.length; i++) {
           var current = rows[i].getChildren()[index];
           current.inject(current.getPrevious(), 'before');
         }
       }
       else {
-        for(var i = 0; i < rows.length; i++) {
+        for(i = 0; i < rows.length; i++) {
           var current = rows[i].getChildren()[index];
           current.inject(rows[i].getLast(), 'before');
         }
@@ -299,7 +303,7 @@ TableWizard4ward.tableWizard = function(el, command, id)
 
     case 'cmover':
       if(index < (cols.length - 2)) {
-        for(var i = 0; i < rows.length; i++) {
+        for(i = 0; i < rows.length; i++) {
           var current = rows[i].getChildren()[index];
           current.inject(current.getNext(), 'after');
         }
@@ -330,7 +334,7 @@ TableWizard4ward.tableWizard = function(el, command, id)
       var first = childs[j].getFirst();
 
       if(first && first.type == 'textarea') {
-        first.name = first.name.replace(/\[[0-9]+\][[0-9]+\]/ig, '[' + (i - 1) + '][' + j + ']')
+        first.name = first.name.replace(/\[[0-9]+\][[0-9]+\]/ig, '[' + (i - 1) + '][' + j + ']');
       }
     }
   }
