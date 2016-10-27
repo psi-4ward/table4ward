@@ -126,15 +126,16 @@ var TableWizard4ward = new Class({
       tinyMCE.activeEditor.focus();
 
       // set RTE position
-      var left = e.event.clientX - 289 + document.body.getScroll().x;
-      var top = e.event.clientY - 155 + document.body.getScroll().y;
+      var scroll = document.body.getScroll();
+      var left = e.event.clientX - 289 + scroll.x;
+      var top = e.event.clientY - 155 + scroll.y;
       var mbDivSize = this.mbDiv.getSize();
       var winSize = window.getSize();
 
-      if(top + mbDivSize.y + 10 > winSize.y) top = winSize.y - mbDivSize.y - 10;
-      else if(top < document.body.getScroll().y + 10) top = document.body.getScroll().y + 10;
+      if(top + mbDivSize.y + 10 > winSize.y + scroll.y) top = winSize.y - mbDivSize.y - 10 + scroll.y;
+      else if(top < scroll.y + 10) top = scroll.y + 10;
       if(left + mbDivSize.x + 10 > winSize.x) left = winSize.x - mbDivSize.x - 10;
-      else if(left < document.body.getScroll().x + 10) left = document.body.getScroll().x + 10;
+      else if(left < scroll.x + 10) left = scroll.x + 10;
 
       this.mbDiv.setStyle('left', left);
       this.mbDiv.setStyle('top', top);
@@ -223,7 +224,7 @@ TableWizard4ward.tableWizard = function(el, command, id)
     index++;
   }
 
-  if(Backend != null) Backend.getScrollOffset();
+  // if(Backend != null) Backend.getScrollOffset();
 
   switch(command) {
     case 'rnew':
